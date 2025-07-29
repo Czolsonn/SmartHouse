@@ -11,7 +11,7 @@ def create_time_widget(parent, Roboto, Roboto_small):
     time.pack(side="top", padx=20, pady=(10, 0))
 
     date = tk.Label(time_label, font= Roboto_small, bg=bg_color, fg="white")
-    date.pack(side="bottom", padx=10, pady=(0, 10))
+    date.pack(side="bottom", padx=10, pady=(0, 30))
 
     def update_time():
         time.config(text=datetime.now().strftime('%H:%M'))

@@ -36,7 +36,7 @@ def create_root():
     bottom_frame.pack(fill="both", expand=True)
 
     # Czcionka
-    Roboto_small = font.Font(family="Roboto",size=12)
+    Roboto_small = font.Font(family="Roboto",size=15)
     Roboto_medium = font.Font(family="Roboto",size= 24)
     Roboto_big = font.Font(family="Roboto",size = 72)        
 
@@ -51,14 +51,17 @@ def create_root():
     separation_label.image = icon
     separation_label.pack()
 
+    footer_frame = tk.Frame(root, bg="#121212")
+    footer_frame.pack(side="bottom", fill="x")
+
     # DOLNE KAFELKI
     CalendarIcon.create_calendar_widget(bottom_frame,Roboto_small)
     WeatherIcon.create_weather_widget(bottom_frame,Roboto_small)
     CameraIcon.create_camera_widget(bottom_frame,Roboto_small)
 
     # Przycisk wyjścia
-    kill_button = tk.Button(root, text="Zamknij", font=("Arial", 10), command=kill_process, bg="red", fg="white")
-    kill_button.pack(side="bottom", pady=5)
+    kill_button = tk.Button(footer_frame, text="Zamknij", font=("Arial", 10), command=kill_process, bg="red", fg="white")
+    kill_button.pack(pady=5)
 
     root.after(50, enter_fullscreen)
     root.mainloop()
