@@ -1,0 +1,6 @@
+Co zrobić:
+- Poprawić pozostałe ikony dolne i zrobić jedną funkcję do tego
+- Obramówka
+- Dodać lokalizacje na temperaturą
+- Dodać ustawienia
+- Zmienić ikony na bardziej high quality jak pogoda

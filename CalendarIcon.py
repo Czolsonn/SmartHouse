@@ -18,7 +18,7 @@ def create_calendar_widget(root,Roboto):
 
     button = tk.Button(
         root, 
-        text="Kalendarz",
+        text="\nKalendarz",
         compound="top",  # <-- tekst pod obrazkiem
         image = photo,
         command=on_click,

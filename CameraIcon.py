@@ -18,7 +18,7 @@ def create_camera_widget(root,Roboto):
 
     button = tk.Button(
         root, 
-        text="Kamera",
+        text="\nKamera",
         compound="top",  # <-- tekst pod obrazkiem
         image = photo,
         command=on_click,
