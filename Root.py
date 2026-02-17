@@ -1,67 +1,48 @@
 import tkinter as tk
-from tkinter import font
-import Time
+import Menu
 import Weather
-import sys
-from PIL import Image, ImageTk
-import CalendarIcon
-import WeatherIcon
-import CameraIcon
+import WeatherCollections
+
 
 def create_root():
+    # Wejście w tryb boarder_less
     def enter_fullscreen():
         root.overrideredirect(True)
-        #root.attributes("-fullscreen", True)
         root.focus_force()
 
-    def kill_process():
-        root.destroy()
-        sys.exit()
 
+    # Utworzenie głównego okna
     root = tk.Tk()
-    root.title("Smart House – Test")
-    root.configure(bg="#121212")
-    root.geometry("800x480")  # dopasowane do ekranu
+    root.title("Smart House")
+    root.configure(bg="#121212") # Ustawienie koloru tła
+    root.geometry("800x480")  # Wymiary ekranu
+    # Canvas do nakładania elementów Menu w celu animacji
+    canvas = tk.Canvas(root, width=800, height=480, bg="#121212", highlightthickness=0)
+    canvas.pack(fill="both", expand=True)
 
-    # GÓRNA CZĘŚĆ
-    top_frame = tk.Frame(root, height=160, bg="#121212")
-    top_frame.pack(side="top", fill="x")
+    menu_frame = tk.Frame(canvas, bg="#121212", width=800, height=480)
+    menu_frame_id = canvas.create_window(0, 0, anchor="nw", window=menu_frame, width=800, height=480)
 
-    # ŚRODKOWY SEPARATOR
-    middle_frame = tk.Frame(root, height=4, bg="#121212")
-    middle_frame.pack(side="top", fill="x")
+    weather_frame = tk.Frame(canvas, bg="#121212", width=800, height=480)
+    weather_frame_id = canvas.create_window(800, 0, anchor="nw", window=weather_frame, width=800, height=480)
 
-    # DOLNY PANEL
-    bottom_frame = tk.Frame(root, height=276, bg="#121212")
-    bottom_frame.pack(fill="both", expand=True)
+    Menu.create_menu(menu_frame,canvas,menu_frame_id,weather_frame_id,weather_frame)
 
-    # Czcionka
-    Roboto_small = font.Font(family="Roboto",size=15)
-    Roboto_medium = font.Font(family="Roboto",size= 24)
-    Roboto_big = font.Font(family="Roboto",size = 72)        
+    def fetch_and_update():
+        new_data = WeatherCollections.read_data_from_server()
+        if new_data is None:
+            # jeśli błąd, spróbuj ponownie później
+            root.after(600_000, fetch_and_update)
+            return
+        # wyczyść poprzednie widgety wewnątrz weather_frame
+        for w in weather_frame.winfo_children():
+            w.destroy()
+        # zbuduj UI na nowo z nowymi danymi
+        Weather.create_weather_menu(weather_frame, new_data,canvas,weather_frame_id,menu_frame_id)
+        # zaplanuj kolejne odświeżenie za 10 minut (600000 ms)
+        root.after(600_000, fetch_and_update)
 
-    # Pogoda i zegar
-    Weather.create_weather_widget(top_frame, Roboto_medium)
-    Time.create_time_widget(top_frame, Roboto_big,Roboto_small)
-
-    # Pasek separatora (700x4)
-    image = Image.open("Image/bialy_pasek_bez_tla.png")
-    icon = ImageTk.PhotoImage(image)
-    separation_label = tk.Label(middle_frame, image=icon, bg="#121212")
-    separation_label.image = icon
-    separation_label.pack()
-
-    footer_frame = tk.Frame(root, bg="#121212")
-    footer_frame.pack(side="bottom", fill="x")
-
-    # DOLNE KAFELKI
-    CalendarIcon.create_calendar_widget(bottom_frame,Roboto_small)
-    WeatherIcon.create_weather_widget(bottom_frame,Roboto_small)
-    CameraIcon.create_camera_widget(bottom_frame,Roboto_small)
-
-    # Przycisk wyjścia
-    kill_button = tk.Button(footer_frame, text="Zamknij", font=("Arial", 10), command=kill_process, bg="red", fg="white")
-    kill_button.pack(pady=5)
+    root.after(0,fetch_and_update)
 
     root.after(50, enter_fullscreen)
     root.mainloop()

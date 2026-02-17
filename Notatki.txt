@@ -1,6 +1,9 @@
 Co zrobić:
-- Poprawić pozostałe ikony dolne i zrobić jedną funkcję do tego
-- Obramówka
-- Dodać lokalizacje na temperaturą
+- W weather zrobić wycentrowanie dołu (wynika ze zniknięcia ikony zamknij)
+- Dodać ikonę cofnięcia do menu głównego
+- Wczytywanie danych pogodowych osobna funkcja (wczytywanie w Root przed rozpoczęciem wyświetlania)
 - Dodać ustawienia
-- Zmienić ikony na bardziej high quality jak pogoda
+- W przyszłości dodać przesuwanie lewo-prawo danych godzinowo pogody
+- Zmiana lokalizacji na weather
+- Kalendarz
+- Kamera
