@@ -6,7 +6,7 @@ import time
 _last_fetch_forecast = 0
 _last_result_forecast = None
 
-API_KEY = "b23482a61b0f00b677789afa837d3826"
+API_KEY = ""
 CITY = "Swidnica"
 URL_FORECAST = f"https://api.openweathermap.org/data/2.5/forecast?q={CITY}&appid={API_KEY}&units=metric&lang=pl"
 URL_CURRENT = f"https://api.openweathermap.org/data/2.5/weather?q={CITY}&appid={API_KEY}&units=metric&lang=pl"
